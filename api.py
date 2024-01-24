@@ -30,7 +30,8 @@ def api():
         delivery_distance = values['delivery_distance']
         number_of_items = values['number_of_items']
         time = values['time']
-        
+
+    #Return error response if payload is invalid
     except KeyError:
         return app.response_class(response="error: Invalid request format",
                                   status=400,)
