@@ -11,6 +11,7 @@ The task of the preliminary backend assignment is to build an HTTP API to calcul
 * Python 3.10.0 or newer
 * Flask 3.0.1
 * pytest 6.2.5 (for testing)
+* requests 2.25.1 (for testing, the POST request testing was also done using Postman)
 
 ### Installing dependencies
 Use the command `pip install -r requirements.txt`
