@@ -1,5 +1,6 @@
 import fee
 from flask import Flask,json, request
+import datetime
 
 #Create a Flask app
 app = Flask(__name__)
@@ -30,9 +31,21 @@ def api():
         delivery_distance = values['delivery_distance']
         number_of_items = values['number_of_items']
         time = values['time']
+        print(time[-1])
+
+        #Check for negative values or a missing Z in the time string
+        if any(i < 0 for i in [cart_value, delivery_distance, number_of_items]) or time[-1] != "Z":
+            raise ValueError
+
+        #Check for invalid time format
+        try:
+            datetime.datetime.fromisoformat(time.strip("Z"))
+        except:
+            raise ValueError
+
 
     #Return error response if payload is invalid
-    except KeyError:
+    except (KeyError, ValueError):
         return app.response_class(response="error: Invalid request format",
                                   status=400,)
     
