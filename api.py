@@ -31,7 +31,6 @@ def api():
         delivery_distance = values['delivery_distance']
         number_of_items = values['number_of_items']
         time = values['time']
-        print(time[-1])
 
         #Check for negative values or a missing Z in the time string
         if any(i < 0 for i in [cart_value, delivery_distance, number_of_items]) or time[-1] != "Z":
