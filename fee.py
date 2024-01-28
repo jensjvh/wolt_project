@@ -1,3 +1,7 @@
+"""
+Calculate delivery fee of the order.
+"""
+
 from math import ceil
 import datetime
 
@@ -35,11 +39,21 @@ class DeliveryFee():
         self._total_fee = 0
 
     def check_cart_value(self):
+        """
+        Checks if cart value is less than 1000 cents.
+        Increase the surcharge by the difference between
+        the cart value and 10€.
+        """
         if self._cart_value < 1000:
             self._surcharge += abs(1000-self._cart_value)
     
     def check_distance(self):
-        #Add 2 euros as the initial distance cost
+        """
+        Checks if the delivery distance goes over 1000 meters.
+        Add 1€ to the delivery fee for every additional 500 meters.
+        """
+        
+        #Delivery fee for the first 1000 meters is 2 euros
         self._delivery_fee += 200
 
         if self._distance > 1000:
@@ -47,6 +61,11 @@ class DeliveryFee():
             self._delivery_fee += ceil(remaining/500)*100
     
     def check_items(self):
+        """
+        Checks if the amount of items in the delivery is greater or
+        equal to five. Add an additional 50 cent surcharge for all items
+        past 4.
+        """
         if self._no_of_items >= 5:
             remaining = self._no_of_items - 4
             self._surcharge += remaining * 50
@@ -55,6 +74,10 @@ class DeliveryFee():
                 self._surcharge += 120
 
     def check_time(self):
+        """
+        Checks if the time is in the Friday rush interval (3-7 pm).
+        If yes, the total fee (surcharge + delivery fee) is multiplied by 1.2.
+        """
         time = self._time.strip("Z")
 
         time = datetime.datetime.fromisoformat(time)
@@ -67,6 +90,10 @@ class DeliveryFee():
                 self._total_fee *= 1.2
 
     def total_fee(self):
+        """
+        Calls all other functions of the DeliveryFee class to calculate and return
+        the total fee. The limit for the delivery fee is set to 15 euros.
+        """
         #Check if cart value is greater than 200 euros
         if self._cart_value >=   DeliveryFee.max_cart_value:
             return 0
