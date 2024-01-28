@@ -8,7 +8,7 @@ The task of the preliminary backend assignment is to build an HTTP API to calcul
 * Pytest tests for making sure the API returns the desired values.
 
 
-### Prerequisites
+### Dependencies
 * Python 3.10.0 or newer
 * Flask 3.0.1
 * pytest 6.2.5 (for testing)
