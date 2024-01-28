@@ -18,7 +18,7 @@ The task of the preliminary backend assignment is to build an HTTP API to calcul
 Use the command `pip install -r requirements.txt`
 
 ### How to run and test
-1. Launch the local server with the command `pip3 api.py`. 
+1. Launch the local server with the command `python3 api.py`. 
 2. Pytest can be invoked to test the functionality of the API with the command `python3 -m pytest test_api.py`
 3. To send a request payload with the included file `test_api.py`, launch `test_api.py` in a new terminal session. Sending a POST request payload (json) to `http://localhost:5000` returns a response payload (json) with the calculated delivery fee.
 
