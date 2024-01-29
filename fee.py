@@ -34,9 +34,9 @@ class DeliveryFee():
         self._distance = distance
         self._no_of_items = no_of_items
         self._time = time
-        self._delivery_fee = 0 #Variable to keep track of delivery fee
-        self._surcharge = 0 #Variable to keep track of surcharge
-        self._total_fee = 0
+        self.delivery_fee = 0 #Variable to keep track of delivery fee
+        self.surcharge = 0 #Variable to keep track of surcharge
+        self.total_charge = 0
 
     def check_cart_value(self):
         """
@@ -45,7 +45,7 @@ class DeliveryFee():
         the cart value and 10€.
         """
         if self._cart_value < 1000:
-            self._surcharge += abs(1000-self._cart_value)
+            self.surcharge += abs(1000-self._cart_value)
     
     def check_distance(self):
         """
@@ -54,11 +54,11 @@ class DeliveryFee():
         """
         
         #Delivery fee for the first 1000 meters is 2 euros
-        self._delivery_fee += 200
+        self.delivery_fee += 200
 
         if self._distance > 1000:
             remaining = self._distance - 1000
-            self._delivery_fee += ceil(remaining/500)*100
+            self.delivery_fee += ceil(remaining/500)*100
     
     def check_items(self):
         """
@@ -68,10 +68,10 @@ class DeliveryFee():
         """
         if self._no_of_items >= 5:
             remaining = self._no_of_items - 4
-            self._surcharge += remaining * 50
+            self.surcharge += remaining * 50
 
             if self._no_of_items > 12:
-                self._surcharge += 120
+                self.surcharge += 120
 
     def check_time(self):
         """
@@ -87,7 +87,7 @@ class DeliveryFee():
         #Check if the day is a Friday and if the time.time() part 
         if datetime.datetime.weekday(time) == 4:
             if time.time() >= rush_start and time.time() < rush_end:
-                self._total_fee *= 1.2
+                self.total_charge *= 1.2
 
     def total_fee(self):
         """
@@ -103,10 +103,10 @@ class DeliveryFee():
         self.check_distance()
         self.check_items()
 
-        self._total_fee = self._delivery_fee + self._surcharge
+        self.total_charge = self.delivery_fee + self.surcharge
     
         #Check for Friday rush hour
         self.check_time()
 
         #Return 1500 if total is greater
-        return min(DeliveryFee.max_total_fee, int(self._total_fee))
+        return min(DeliveryFee.max_total_fee, int(self.total_charge))
