@@ -9,5 +9,16 @@ Send a POST request payload, and prints the response
 url = "http://localhost:5000"
 data = {"cart_value": 790, "delivery_distance": 2235, "number_of_items": 4, "time": "2024-01-15T13:00:00Z"}
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-r = requests.post(url, data=json.dumps(data), headers=headers)
-print(r.json())
+
+try:
+    r = requests.post(url, data=json.dumps(data), headers=headers)
+
+    if r.status_code == 200:
+        response_data = r.json()
+        print("Response:", response_data)
+    else:
+        print("Error:", r.status_code)
+        print("Response:", r.text)
+
+except requests.exceptions.RequestException as e:
+    print("Error:", e)
