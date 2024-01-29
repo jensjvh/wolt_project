@@ -8,6 +8,24 @@ from api import app
 def client():
     return app.test_client()
 
+def test_api_correct_value(client: FlaskClient):
+    """
+    Test for checking that the API returns the correct value for inputs
+    """
+    payload = {
+        "cart_value": 790,
+        "delivery_distance": 2235,
+        "number_of_items": 4,
+        "time": "2024-01-15T13:00:00Z"
+    }
+
+    response = client.post('/', json=payload)
+
+    assert response.status_code == 200
+    data = json.loads(response.data.decode('utf-8'))
+    assert 'delivery_fee' in data
+    assert data['delivery_fee'] == 710
+
 def test_api_valid_request(client: FlaskClient):
     payload = {
         "cart_value": 1000,
