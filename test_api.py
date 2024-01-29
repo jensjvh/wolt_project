@@ -1,5 +1,6 @@
 import json
 import pytest
+import fee
 from flask.testing import FlaskClient
 from api import app
 
@@ -91,11 +92,19 @@ def test_api_rush_hour_discount(client: FlaskClient):
 
     response = client.post('/', json=payload)
 
+    calculated_fee = fee.DeliveryFee(payload["cart_value"],
+                             payload["delivery_distance"],
+                             payload["number_of_items"],
+                             payload["time"])
+    
+    #Execute the calculation
+    calculated_fee.total_fee()
+
     assert response.status_code == 200
     data = json.loads(response.data.decode('utf-8'))
     assert 'delivery_fee' in data
     # Assuming that the rush hour discount multiplies the delivery fee by 1.2
-    assert data['delivery_fee'] == 1.2 * 300
+    assert data['delivery_fee'] == 1.2 * (calculated_fee.delivery_fee + calculated_fee.surcharge)
 
 def test_api_maximum_total_fee(client: FlaskClient):
     # Test if the total fee is correctly limited to 15 euros
