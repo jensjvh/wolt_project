@@ -1,8 +1,9 @@
 # Submission for the Wolt Summer 2024 Engineering Internship, backend specific preliminary assignment.
 
-The task of the preliminary backend assignment is to build an HTTP API to calculate a delivery fee. My submission is implemented using Python and the Flask framework. Tests are done using the pytest framework.
+The task of the preliminary backend assignment is to build an HTTP API to calculate a delivery fee. My submission is implemented using Python and the Flask framework. Tests are done using the pytest framework, and the API testing using either Postman or the `requests` library.
 
 ### Features
+* Hosting the API on a local server as a Flask app.
 * Calculate and return a delivery fee as a HTTP response JSON payload from a given HTTP POST request JSON payload using a Flask API.
 * Check the request payload for negative values, invalid time strings or missing keys.
 * Pytest tests for making sure the API returns the desired values.
