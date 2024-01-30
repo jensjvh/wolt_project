@@ -11,7 +11,8 @@ data = {"cart_value": 790, "delivery_distance": 2235, "number_of_items": 4, "tim
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
 try:
-    r = requests.post(url, data=json.dumps(data), headers=headers)
+    #Timeout after 5 seconds
+    r = requests.post(url, data=json.dumps(data), headers=headers, timeout=5)
 
     if r.status_code == 200:
         response_data = r.json()
